@@ -1,0 +1,67 @@
+<div class="jumbotron">
+  
+  <p class="lead">
+      <h2>Search For Universities</h2>
+  </p>
+  
+  <div class="row clear">
+              <div class="col-lg-12">
+                <input type="text" class="form-control"  placeholder="University Name (optional)" ng-change="universities()" typeahead="s as s.name for s in suggestion" ng-model="university">
+              </div>
+
+
+   </div>
+
+   
+
+    <div class="row clear">
+      <div class="col-lg-4">
+          <button class="form-control btn-primary" ng-click="submit()">Search</button>
+      </div>
+    </div>
+
+
+</div>
+
+<div class="row marketing" ng-show="showNoResult">
+  <label class="bg-info"> 
+      No Result found.
+  </label>
+</div>
+<div class="row marketing" ng-show="data.length">
+     
+            
+    <div ng-show="data.length > 1">
+    <div class="row clear">
+      <div class="col-lg-8">
+       <label>
+         <span>Filter Tuition Fees</span>
+
+       </label>
+
+       <div class="checkbox">
+       <label>
+          <input type="checkbox" ng-model="isLocal"> In State Fees
+       </label>
+      </div>       
+
+       <div range-slider min="tuitionFees.range.min" max="tuitionFees.range.max" model-min="tuitionFees.minFees" model-max="tuitionFees.maxFees" step="1000" filter="currency:'$'" orientation="horizontal" showValues="true"></div>  
+      </div>
+      
+    </div>
+  </div>
+
+    <table class="table table-striped" >
+    <tr>
+      <th><a href="" ng-click="predicate = 'name'; reverse=!reverse">Name</a></th>
+      <th><a href="" ng-click="predicate = 'fees.inState'; reverse=!reverse">In State Fee</a></th>
+      <th><a href="" ng-click="predicate = 'fees.outState'; reverse=!reverse">Out State Fee</a></th>
+    </tr>
+    <tr ng-repeat="d in data | orderBy:predicate:reverse | rangeFilter:tuitionFees:isLocal">
+      <td>{{d.name}}</td>
+      <td>{{d.fees.inState | currency}}</td>
+      <td>{{d.fees.outState | currency}}</td>
+    </tr>
+  </table>
+
+</div>
